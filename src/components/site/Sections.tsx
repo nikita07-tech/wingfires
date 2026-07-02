@@ -3,7 +3,7 @@ import {
   Cog, Disc, Circle, Wrench, Gauge, Cpu, Plane, Zap, Fuel, Wind,
   Bolt, Filter, Layers, Battery, Lightbulb, Box, RotateCw, Package,
   Truck, Hammer, Boxes, Radio, ShieldCheck, Globe, Clock, Award,
-  CheckCircle2, ArrowRight, Star, Quote, PlaneTakeoff,
+  CheckCircle2, ArrowRight, Star, Quote, PlaneTakeoff, Search,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
