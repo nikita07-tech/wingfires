@@ -6,6 +6,12 @@ import {
   CheckCircle2, ArrowRight, Star, Quote, PlaneTakeoff, Search,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import turbineBlade from "@/assets/part-turbine-blade.jpg";
+import avionics from "@/assets/part-avionics.jpg";
+import landingGear from "@/assets/part-landing-gear.jpg";
+import apu from "@/assets/part-apu.jpg";
+import hydraulic from "@/assets/part-hydraulic.jpg";
+import brake from "@/assets/part-brake.jpg";
 
 /* ------------------------------ SECTION SHELL ----------------------------- */
 function SectionHeader({ eyebrow, title, sub }: { eyebrow: string; title: React.ReactNode; sub?: string }) {
