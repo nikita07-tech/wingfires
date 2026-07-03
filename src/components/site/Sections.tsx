@@ -27,11 +27,6 @@ function SectionHeader({ eyebrow, title, sub }: { eyebrow: string; title: React.
 }
 
 /* --------------------------------- CATALOG -------------------------------- */
-const CATEGORIES: { icon: LucideIcon; name: string; count: string; brands: string }[] = [
-  { icon: Cog, name: "Engine Components", count: "3,240 in stock", brands: "GE · P&W · Rolls-Royce" },
-  { icon: RotateCw, name: "Turbine Blades", count: "1,120", brands: "GE · Safran · Honeywell" },
-  { icon: Circle, name: "Bearings", count: "980", brands: "SKF · Timken · FAG" },
-/* --------------------------------- CATALOG -------------------------------- */
 type Category = { icon: LucideIcon; name: string; count: string; brands: string; img?: string };
 
 const FEATURED_CATEGORIES: Category[] = [
