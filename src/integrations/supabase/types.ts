@@ -14,16 +14,173 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      quotes: {
+        Row: {
+          certificate: string | null
+          created_at: string
+          currency: string
+          id: string
+          lead_time: string
+          notes: string | null
+          price: number
+          rfq_id: string
+          shipping: string | null
+          stock_qty: number
+          vendor_id: string
+          warranty: string | null
+        }
+        Insert: {
+          certificate?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          lead_time: string
+          notes?: string | null
+          price: number
+          rfq_id: string
+          shipping?: string | null
+          stock_qty?: number
+          vendor_id: string
+          warranty?: string | null
+        }
+        Update: {
+          certificate?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          lead_time?: string
+          notes?: string | null
+          price?: number
+          rfq_id?: string
+          shipping?: string | null
+          stock_qty?: number
+          vendor_id?: string
+          warranty?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quotes_rfq_id_fkey"
+            columns: ["rfq_id"]
+            isOneToOne: false
+            referencedRelation: "rfqs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rfqs: {
+        Row: {
+          aircraft: string | null
+          buyer_company: string | null
+          buyer_email: string | null
+          buyer_name: string | null
+          condition: string | null
+          created_at: string
+          id: string
+          lead_id: string
+          manufacturer: string | null
+          notes: string | null
+          part_name: string | null
+          part_number: string
+          quantity: number
+          status: string
+        }
+        Insert: {
+          aircraft?: string | null
+          buyer_company?: string | null
+          buyer_email?: string | null
+          buyer_name?: string | null
+          condition?: string | null
+          created_at?: string
+          id?: string
+          lead_id: string
+          manufacturer?: string | null
+          notes?: string | null
+          part_name?: string | null
+          part_number: string
+          quantity?: number
+          status?: string
+        }
+        Update: {
+          aircraft?: string | null
+          buyer_company?: string | null
+          buyer_email?: string | null
+          buyer_name?: string | null
+          condition?: string | null
+          created_at?: string
+          id?: string
+          lead_id?: string
+          manufacturer?: string | null
+          notes?: string | null
+          part_name?: string | null
+          part_number?: string
+          quantity?: number
+          status?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      vendor_profiles: {
+        Row: {
+          certifications: string | null
+          company_name: string | null
+          contact_name: string | null
+          country: string | null
+          created_at: string
+          user_id: string
+        }
+        Insert: {
+          certifications?: string | null
+          company_name?: string | null
+          contact_name?: string | null
+          country?: string | null
+          created_at?: string
+          user_id: string
+        }
+        Update: {
+          certifications?: string | null
+          company_name?: string | null
+          contact_name?: string | null
+          country?: string | null
+          created_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "vendor" | "buyer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +307,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "vendor", "buyer"],
+    },
   },
 } as const
