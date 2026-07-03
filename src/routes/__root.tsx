@@ -8,9 +8,11 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
   return (
@@ -60,11 +62,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AeroSourced — Global Aircraft Parts Marketplace & RFQ Platform" },
-      { name: "description", content: "Source certified aircraft parts from 2,500+ verified vendors across 85+ countries. Instant RFQs for engine components, avionics, landing gear and more — 24/7 AOG support." },
-      { name: "author", content: "AeroSourced" },
-      { property: "og:title", content: "AeroSourced — Global Aircraft Parts Marketplace" },
-      { property: "og:description", content: "Connect airlines, MROs, brokers and vendors on a single certified marketplace. Instant quotes, OEM & PMA parts, worldwide logistics." },
+      { title: "Wing Fires — Global Aircraft Parts Marketplace & RFQ Platform" },
+      { name: "description", content: "Wing Fires connects airlines, MROs, brokers and 2,500+ verified vendors across 85+ countries. Instant RFQs for engines, avionics, landing gear and consumables — 24/7 AOG support." },
+      { name: "author", content: "Wing Fires" },
+      { property: "og:title", content: "Wing Fires — Global Aircraft Parts Marketplace" },
+      { property: "og:description", content: "Certified aircraft parts marketplace. Instant quotes, OEM & PMA inventory, worldwide logistics." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -93,9 +95,19 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      router.invalidate();
+      if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [router, queryClient]);
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <Toaster theme="dark" position="top-right" richColors />
     </QueryClientProvider>
   );
 }
