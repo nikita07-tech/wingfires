@@ -334,7 +334,7 @@ export function Manufacturers() {
 
 /* ---------------------------- TESTIMONIALS ------------------------------- */
 const TESTIMONIALS = [
-  { name: "Marcus Reinhardt", role: "Head of Procurement, Lufthansa Technik", text: "AeroSourced cut our RFQ turnaround from 3 days to under 4 hours. The vendor network is unmatched.", },
+  { name: "Marcus Reinhardt", role: "Head of Procurement, Lufthansa Technik", text: "Wing Fires cut our RFQ turnaround from 3 days to under 4 hours. The vendor network is unmatched.", },
   { name: "Priya Nair", role: "AOG Manager, Emirates Engineering", text: "Sourced an APU controller for a grounded 777 at 2am. Wheels-up in 6 hours. That's the definition of AOG support.", },
   { name: "Alessandro Rossi", role: "Managing Director, Alitalia MRO", text: "Transparent quotes, verified certifications, and airtight documentation. This is how aviation procurement should work.", },
 ];
@@ -436,7 +436,7 @@ export function Footer() {
               <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-electric to-electric-glow">
                 <Plane className="h-4.5 w-4.5 text-navy-deep" strokeWidth={2.5} />
               </div>
-              <div className="font-display text-lg font-bold">AeroSourced</div>
+              <div className="font-display text-lg font-bold">Wing Fires</div>
             </div>
             <p className="mt-4 text-sm text-silver-dim max-w-xs">
               The global marketplace for certified aircraft parts. Trusted by 2,500+ vendors across 85+ countries.
@@ -463,7 +463,7 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-wrap items-center justify-between gap-4 text-xs text-silver-dim">
-          <div>© {new Date().getFullYear()} AeroSourced. All rights reserved.</div>
+          <div id="footer">© {new Date().getFullYear()} Wing Fires. All rights reserved.</div>
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-electric" /> FAA / EASA Compliant</span>
             <span className="flex items-center gap-1.5"><Globe className="h-3.5 w-3.5 text-electric" /> 85+ Countries</span>
