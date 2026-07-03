@@ -31,60 +31,108 @@ const CATEGORIES: { icon: LucideIcon; name: string; count: string; brands: strin
   { icon: Cog, name: "Engine Components", count: "3,240 in stock", brands: "GE · P&W · Rolls-Royce" },
   { icon: RotateCw, name: "Turbine Blades", count: "1,120", brands: "GE · Safran · Honeywell" },
   { icon: Circle, name: "Bearings", count: "980", brands: "SKF · Timken · FAG" },
-  { icon: PlaneTakeoff, name: "Landing Gear", count: "540", brands: "Safran · Liebherr" },
-  { icon: Disc, name: "Wheels & Brakes", count: "670", brands: "Meggitt · Honeywell" },
-  { icon: Gauge, name: "Hydraulic Systems", count: "812", brands: "Parker · Eaton" },
-  { icon: Cpu, name: "Avionics", count: "1,540", brands: "Collins · Honeywell · Thales" },
+/* --------------------------------- CATALOG -------------------------------- */
+type Category = { icon: LucideIcon; name: string; count: string; brands: string; img?: string };
+
+const FEATURED_CATEGORIES: Category[] = [
+  { icon: Cog, name: "Engine Components", count: "3,240 parts", brands: "GE · P&W · Rolls-Royce", img: turbineBlade },
+  { icon: Cpu, name: "Avionics & Controls", count: "1,540 parts", brands: "Collins · Honeywell · Thales", img: avionics },
+  { icon: PlaneTakeoff, name: "Landing Gear", count: "540 parts", brands: "Safran · Liebherr", img: landingGear },
+  { icon: Cog, name: "APU Systems", count: "180 units", brands: "Honeywell · P&WC", img: apu },
+  { icon: Gauge, name: "Hydraulic Systems", count: "812 parts", brands: "Parker · Eaton", img: hydraulic },
+  { icon: Disc, name: "Wheels & Brakes", count: "670 parts", brands: "Meggitt · Honeywell", img: brake },
+];
+
+const MORE_CATEGORIES: Category[] = [
+  { icon: RotateCw, name: "Turbine Blades", count: "1,120", brands: "GE · Safran" },
+  { icon: Circle, name: "Bearings", count: "980", brands: "SKF · Timken" },
   { icon: Plane, name: "Flight Controls", count: "430", brands: "Moog · Parker" },
   { icon: Zap, name: "Electrical", count: "2,100", brands: "Safran · Astronics" },
   { icon: Box, name: "Cabin Equipment", count: "760", brands: "Recaro · Zodiac" },
   { icon: Fuel, name: "Fuel Systems", count: "390", brands: "Parker · Woodward" },
-  { icon: Wind, name: "Pneumatic", count: "310", brands: "Liebherr · Nord-Micro" },
+  { icon: Wind, name: "Pneumatic", count: "310", brands: "Liebherr" },
   { icon: Bolt, name: "Fasteners", count: "9,800", brands: "LISI · Alcoa" },
   { icon: Filter, name: "Filters", count: "1,240", brands: "Pall · Donaldson" },
-  { icon: Layers, name: "Gaskets & Seals", count: "3,100", brands: "Trelleborg · Parker" },
+  { icon: Layers, name: "Gaskets & Seals", count: "3,100", brands: "Trelleborg" },
   { icon: Battery, name: "Batteries", count: "280", brands: "Saft · Concorde" },
-  { icon: Lightbulb, name: "Lighting", count: "540", brands: "Collins · Astronics" },
+  { icon: Lightbulb, name: "Lighting", count: "540", brands: "Collins" },
   { icon: Package, name: "Airframe", count: "620", brands: "Boeing · Airbus" },
-  { icon: Plane, name: "Propellers", count: "210", brands: "Hartzell · McCauley" },
-  { icon: Cog, name: "APU", count: "180", brands: "Honeywell · P&WC" },
+  { icon: Plane, name: "Propellers", count: "210", brands: "Hartzell" },
   { icon: Truck, name: "GSE", count: "340", brands: "TLD · JBT" },
-  { icon: Hammer, name: "Tooling", count: "1,800", brands: "Snap-on · Facom" },
+  { icon: Hammer, name: "Tooling", count: "1,800", brands: "Snap-on" },
   { icon: Boxes, name: "Consumables", count: "12,400", brands: "Henkel · 3M" },
-  { icon: Radio, name: "Comm Systems", count: "460", brands: "Collins · Rockwell" },
+  { icon: Radio, name: "Comm Systems", count: "460", brands: "Collins" },
 ];
 
 export function Catalog() {
   return (
     <section id="catalog" className="relative py-24 md:py-32">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-electric/40 to-transparent" />
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeader
           eyebrow="Parts Catalog"
           title={<>Every category. <span className="text-gradient-electric">One marketplace.</span></>}
           sub="From turbine blades to consumables — browse 24 certified categories with live inventory from vendors worldwide."
         />
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {CATEGORIES.map((c, i) => (
+
+        {/* Featured category cards with imagery */}
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {FEATURED_CATEGORIES.map((c, i) => (
             <motion.a
               key={c.name}
-              href="#"
-              initial={{ opacity: 0, y: 20 }}
+              href="#catalog"
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: (i % 8) * 0.04 }}
-              className="group relative overflow-hidden glass rounded-2xl p-5 hover:bg-white/10 transition-all hover:-translate-y-1 hover:border-electric/40"
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ delay: (i % 3) * 0.08 }}
+              className="group relative overflow-hidden glass-strong rounded-2xl hover:border-electric/50 transition-all hover:-translate-y-1"
             >
-              <div className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-electric/10 blur-2xl opacity-0 group-hover:opacity-100 transition" />
-              <div className="relative">
-                <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-white/10 to-white/[0.02] border border-white/10 group-hover:border-electric/50 transition">
-                  <c.icon className="h-5 w-5 text-electric" />
+              <div className="relative h-52 overflow-hidden">
+                <img
+                  src={c.img}
+                  alt={c.name}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent" />
+                <div className="absolute top-3 left-3 rounded-md glass px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-electric">
+                  Certified
                 </div>
-                <div className="mt-4 font-semibold">{c.name}</div>
-                <div className="mt-1 font-mono text-[11px] text-silver-dim">{c.count}</div>
-                <div className="mt-3 text-xs text-silver-dim opacity-0 group-hover:opacity-100 -translate-y-1 group-hover:translate-y-0 transition">
-                  {c.brands}
+                <div className="absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-lg glass-strong">
+                  <c.icon className="h-4 w-4 text-electric" />
                 </div>
               </div>
+              <div className="relative p-5">
+                <div className="font-semibold text-lg leading-tight">{c.name}</div>
+                <div className="mt-1 font-mono text-[11px] text-electric">{c.count} · in stock</div>
+                <div className="mt-3 flex items-center justify-between">
+                  <div className="text-xs text-silver-dim">{c.brands}</div>
+                  <span className="inline-flex items-center gap-1 text-xs text-silver group-hover:text-electric transition">
+                    Browse <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+
+        {/* Compact category tiles */}
+        <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          {MORE_CATEGORIES.map((c, i) => (
+            <motion.a
+              key={c.name}
+              href="#catalog"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: (i % 6) * 0.03 }}
+              className="group relative overflow-hidden glass rounded-xl p-4 hover:bg-white/10 hover:border-electric/40 transition"
+            >
+              <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-white/10 to-white/[0.02] border border-white/10 group-hover:border-electric/50 transition">
+                <c.icon className="h-4 w-4 text-electric" />
+              </div>
+              <div className="mt-3 font-semibold text-sm leading-tight">{c.name}</div>
+              <div className="mt-0.5 font-mono text-[10px] text-silver-dim">{c.count} parts</div>
             </motion.a>
           ))}
         </div>
@@ -94,13 +142,17 @@ export function Catalog() {
 }
 
 /* --------------------------- FEATURED PARTS ------------------------------ */
-const PARTS = [
-  { pn: "2214M91G01", name: "HPT Blade — Stage 1", mfr: "GE Aerospace", ac: "A320neo · LEAP-1A", cond: "New", cert: "FAA 8130-3", eta: "24-48h", stock: "In Stock" },
-  { pn: "AV-3450-27B", name: "Avionics Control Unit", mfr: "Collins Aerospace", ac: "B737 MAX", cond: "Overhauled", cert: "EASA Form 1", eta: "3-5 days", stock: "12 units" },
-  { pn: "LG-77-4412", name: "Main Landing Gear Actuator", mfr: "Safran", ac: "A350-900", cond: "Serviceable", cert: "FAA · OEM", eta: "5-7 days", stock: "3 units" },
-  { pn: "APU-131-9A", name: "APU Controller", mfr: "Honeywell", ac: "B777 · B787", cond: "New", cert: "OEM · FAA", eta: "Same day", stock: "AOG Ready" },
-  { pn: "HYD-2210-P", name: "Hydraulic Pump Assy", mfr: "Parker Aerospace", ac: "A330 · A340", cond: "Overhauled", cert: "EASA · FAA", eta: "48h", stock: "8 units" },
-  { pn: "BRK-A320-M", name: "Carbon Brake Assembly", mfr: "Meggitt", ac: "A320 Family", cond: "New", cert: "FAA 8130-3", eta: "72h", stock: "In Stock" },
+type Part = {
+  pn: string; name: string; mfr: string; ac: string; cond: string;
+  cert: string; eta: string; stock: string; img: string; price: string;
+};
+const PARTS: Part[] = [
+  { pn: "2214M91G01", name: "HPT Blade — Stage 1", mfr: "GE Aerospace", ac: "A320neo · LEAP-1A", cond: "New", cert: "FAA 8130-3", eta: "24-48h", stock: "In Stock", img: turbineBlade, price: "$4,850" },
+  { pn: "AV-3450-27B", name: "Avionics Control Unit", mfr: "Collins Aerospace", ac: "B737 MAX", cond: "Overhauled", cert: "EASA Form 1", eta: "3-5 days", stock: "12 units", img: avionics, price: "$12,400" },
+  { pn: "LG-77-4412", name: "Main Landing Gear Actuator", mfr: "Safran", ac: "A350-900", cond: "Serviceable", cert: "FAA · OEM", eta: "5-7 days", stock: "3 units", img: landingGear, price: "$38,200" },
+  { pn: "APU-131-9A", name: "APU Controller", mfr: "Honeywell", ac: "B777 · B787", cond: "New", cert: "OEM · FAA", eta: "Same day", stock: "AOG Ready", img: apu, price: "$21,900" },
+  { pn: "HYD-2210-P", name: "Hydraulic Pump Assy", mfr: "Parker Aerospace", ac: "A330 · A340", cond: "Overhauled", cert: "EASA · FAA", eta: "48h", stock: "8 units", img: hydraulic, price: "$7,650" },
+  { pn: "BRK-A320-M", name: "Carbon Brake Assembly", mfr: "Meggitt", ac: "A320 Family", cond: "New", cert: "FAA 8130-3", eta: "72h", stock: "In Stock", img: brake, price: "$16,300" },
 ];
 
 const CONDITION_COLOR: Record<string, string> = {
@@ -112,7 +164,7 @@ const CONDITION_COLOR: Record<string, string> = {
 
 export function FeaturedParts() {
   return (
-    <section className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-surface/30 to-transparent">
+    <section id="featured" className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-surface/30 to-transparent">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-end justify-between flex-wrap gap-4">
           <SectionHeader
@@ -121,14 +173,14 @@ export function FeaturedParts() {
           />
           <div className="flex flex-wrap gap-2">
             {["All", "Airbus", "Boeing", "Engines", "Avionics"].map((f, i) => (
-              <button key={f} className={`rounded-full px-4 py-1.5 text-xs border transition ${i === 0 ? "bg-electric text-navy-deep border-electric" : "glass text-silver hover:text-foreground"}`}>
+              <button key={f} className={`rounded-full px-4 py-1.5 text-xs border transition ${i === 0 ? "bg-electric text-navy-deep border-electric" : "glass text-silver hover:text-foreground border-white/10"}`}>
                 {f}
               </button>
             ))}
           </div>
         </div>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {PARTS.map((p, i) => (
             <motion.article
               key={p.pn}
@@ -136,18 +188,25 @@ export function FeaturedParts() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ delay: (i % 3) * 0.08 }}
-              className="group glass-strong rounded-2xl overflow-hidden hover:border-electric/40 transition"
+              className="group glass-strong rounded-2xl overflow-hidden hover:border-electric/50 transition-all hover:-translate-y-1.5 hover:shadow-[0_25px_60px_-15px_rgba(96,165,250,0.35)]"
             >
-              <div className="relative h-44 bg-gradient-to-br from-navy to-navy-deep overflow-hidden">
-                <div className="absolute inset-0 bg-grid opacity-40" />
-                <div className="absolute inset-0 grid place-items-center">
-                  <Cog className="h-24 w-24 text-electric/40 group-hover:rotate-45 group-hover:text-electric transition-all duration-700" />
-                </div>
+              <div className="relative h-52 overflow-hidden bg-navy-deep">
+                <img
+                  src={p.img}
+                  alt={p.name}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-transparent to-transparent" />
                 <div className="absolute top-3 left-3 flex gap-1.5">
                   <span className={`rounded-md border px-2 py-0.5 text-[10px] font-medium ${CONDITION_COLOR[p.cond]}`}>{p.cond}</span>
                 </div>
                 <div className="absolute top-3 right-3 rounded-md glass px-2 py-0.5 text-[10px] font-mono text-silver">
                   {p.stock}
+                </div>
+                <div className="absolute bottom-3 left-3 rounded-lg glass-strong px-3 py-1.5">
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-silver-dim">From</div>
+                  <div className="font-display text-lg font-bold text-electric-glow leading-none">{p.price}</div>
                 </div>
               </div>
               <div className="p-5">
@@ -165,9 +224,9 @@ export function FeaturedParts() {
                     <Clock className="h-3.5 w-3.5" /> {p.eta}
                   </div>
                 </div>
-                <button className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white/5 hover:bg-gradient-to-br hover:from-electric hover:to-electric-glow hover:text-navy-deep py-2.5 text-sm font-semibold transition">
+                <a href="#rfq" className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white/5 hover:bg-gradient-to-br hover:from-electric hover:to-electric-glow hover:text-navy-deep py-2.5 text-sm font-semibold transition">
                   Request Quote <ArrowRight className="h-4 w-4" />
-                </button>
+                </a>
               </div>
             </motion.article>
           ))}
@@ -176,8 +235,6 @@ export function FeaturedParts() {
     </section>
   );
 }
-
-/* --------------------------- AIRCRAFT MODELS ----------------------------- */
 const MODELS = [
   "Airbus A320", "Airbus A330", "Airbus A350", "Boeing 737", "Boeing 747",
   "Boeing 777", "Boeing 787", "ATR 72", "Bombardier", "Embraer E-Jets",
