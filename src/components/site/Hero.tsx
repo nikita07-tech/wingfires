@@ -60,11 +60,7 @@ export function Hero() {
         </div>
       </div>
 
-      <img
-        src={aircraft}
-        alt=""
-        className="pointer-events-none absolute top-[18%] left-0 w-56 opacity-70 animate-fly-across drop-shadow-[0_10px_30px_rgba(96,165,250,0.4)]"
-      />
+      <InteractivePlane src={aircraft} />
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute top-1/3 left-0 h-px w-1/2 bg-gradient-to-r from-transparent via-electric to-transparent animate-streak" />
