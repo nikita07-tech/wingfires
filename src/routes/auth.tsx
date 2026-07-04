@@ -70,11 +70,8 @@ function AuthPage() {
     <div className="min-h-screen bg-hero relative overflow-hidden grid place-items-center px-4 py-16">
       <div className="absolute inset-0 bg-grid opacity-40" />
       <div className="relative w-full max-w-md">
-        <Link to="/" className="flex items-center gap-2.5 justify-center mb-8">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-electric to-electric-glow glow-electric">
-            <Plane className="h-5 w-5 text-navy-deep" strokeWidth={2.5} />
-          </div>
-          <div className="font-display text-xl font-bold">Wing Fires</div>
+        <Link to="/" className="flex items-center justify-center mb-8">
+          <BrandLogo size={44} subtitle="Aircraft Parts Supplier" />
         </Link>
 
         <div className="glass-strong rounded-2xl p-7">
