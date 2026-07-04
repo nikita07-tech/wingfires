@@ -25,7 +25,9 @@ export type Database = {
           price: number
           rfq_id: string
           shipping: string | null
+          status: string
           stock_qty: number
+          updated_at: string
           vendor_id: string
           warranty: string | null
         }
@@ -39,7 +41,9 @@ export type Database = {
           price: number
           rfq_id: string
           shipping?: string | null
+          status?: string
           stock_qty?: number
+          updated_at?: string
           vendor_id: string
           warranty?: string | null
         }
@@ -53,7 +57,9 @@ export type Database = {
           price?: number
           rfq_id?: string
           shipping?: string | null
+          status?: string
           stock_qty?: number
+          updated_at?: string
           vendor_id?: string
           warranty?: string | null
         }

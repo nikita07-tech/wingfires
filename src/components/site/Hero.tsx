@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowRight, Search, Sparkles, Zap, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Search, Sparkles, Zap, CheckCircle2, MousePointer2 } from "lucide-react";
 import { toast } from "sonner";
 import turbine from "@/assets/hero-turbine.jpg";
 import aircraft from "@/assets/aircraft-silhouette.png";
@@ -60,11 +60,7 @@ export function Hero() {
         </div>
       </div>
 
-      <img
-        src={aircraft}
-        alt=""
-        className="pointer-events-none absolute top-[18%] left-0 w-56 opacity-70 animate-fly-across drop-shadow-[0_10px_30px_rgba(96,165,250,0.4)]"
-      />
+      <InteractivePlane src={aircraft} />
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute top-1/3 left-0 h-px w-1/2 bg-gradient-to-r from-transparent via-electric to-transparent animate-streak" />
@@ -254,5 +250,61 @@ function RfqSelect({
         {options.map((o) => <option key={o} className="bg-navy">{o}</option>)}
       </select>
     </label>
+  );
+}
+
+function InteractivePlane({ src }: { src: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rx = useSpring(useTransform(y, [-100, 100], [15, -15]), { stiffness: 120, damping: 12 });
+  const ry = useSpring(useTransform(x, [-100, 100], [-20, 20]), { stiffness: 120, damping: 12 });
+  const [hovered, setHovered] = useState(false);
+
+  function onMove(e: React.MouseEvent) {
+    const el = ref.current; if (!el) return;
+    const r = el.getBoundingClientRect();
+    x.set(e.clientX - r.left - r.width / 2);
+    y.set(e.clientY - r.top - r.height / 2);
+  }
+  function onLeave() { x.set(0); y.set(0); setHovered(false); }
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={onLeave}
+      className="absolute top-[14%] left-0 right-0 h-64 md:h-80 z-10"
+      style={{ perspective: 1200 }}
+    >
+      <motion.div
+        drag
+        dragConstraints={ref}
+        dragElastic={0.35}
+        dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
+        whileTap={{ scale: 1.08, cursor: "grabbing" }}
+        whileHover={{ scale: 1.04 }}
+        animate={hovered ? {} : { x: [0, 40, 0], y: [0, -10, 0] }}
+        transition={hovered ? {} : { duration: 14, repeat: Infinity, ease: "easeInOut" }}
+        style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
+        className="mx-auto w-56 md:w-72 cursor-grab select-none"
+      >
+        <motion.img
+          src={src}
+          alt="Interactive aircraft — drag or hover"
+          draggable={false}
+          style={{ translateZ: 40 }}
+          className="w-full h-auto drop-shadow-[0_20px_50px_rgba(96,165,250,0.55)]"
+        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: hovered ? 1 : 0 }}
+          className="mt-2 flex items-center justify-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-electric"
+        >
+          <MousePointer2 className="h-3 w-3" /> Drag me
+        </motion.div>
+      </motion.div>
+    </div>
   );
 }
