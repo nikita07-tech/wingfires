@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@tanstack/react-router";
-import { Bell, Menu, Plane, Search, User, X } from "lucide-react";
+import { Bell, Menu, Search, User, X } from "lucide-react";
+import { BrandLogo } from "./BrandLogo";
 
 const NAV: { label: string; href: string }[] = [
   { label: "Browse Parts", href: "/#catalog" },
