@@ -173,7 +173,7 @@ function VendorDashboard() {
                 {quotes.data?.length === 0 && (
                   <tr><td colSpan={8} className="px-4 py-8 text-center text-silver-dim">No quotes submitted yet.</td></tr>
                 )}
-                {quotes.data?.map((q: Quote) => (
+                {quotes.data?.map((raw) => { const q = raw as unknown as Quote; return (
                   <tr key={q.id} className="border-t border-white/5 hover:bg-white/[0.02]">
                     <td className="px-4 py-3 font-mono text-electric text-xs">{q.rfqs?.lead_id ?? "—"}</td>
                     <td className="px-4 py-3">{q.rfqs?.part_name ?? q.rfqs?.part_number ?? "—"}</td>
