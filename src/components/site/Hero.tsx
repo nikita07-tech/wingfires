@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowRight, Search, Sparkles, Zap, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Search, Sparkles, Zap, CheckCircle2, MousePointer2 } from "lucide-react";
 import { toast } from "sonner";
 import turbine from "@/assets/hero-turbine.jpg";
 import aircraft from "@/assets/aircraft-silhouette.png";
