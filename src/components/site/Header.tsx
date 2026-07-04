@@ -5,7 +5,7 @@ import { Bell, Menu, Search, User, X } from "lucide-react";
 import { BrandLogo } from "./BrandLogo";
 
 const NAV: { label: string; href: string }[] = [
-  { label: "Browse Parts", href: "/#catalog" },
+  { label: "Search Parts", href: "/parts" },
   { label: "Categories", href: "/#catalog" },
   { label: "Featured", href: "/#featured" },
   { label: "Services", href: "/#services" },
