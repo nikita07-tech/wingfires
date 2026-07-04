@@ -192,7 +192,7 @@ function VendorDashboard() {
                       </button>
                     </td>
                   </tr>
-                ))}
+                ); })}
               </tbody>
             </table>
           </div>
