@@ -38,15 +38,7 @@ export function Header() {
           }`}
         >
           <Link to="/" className="flex items-center gap-2.5 shrink-0">
-            <div className="relative grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-electric to-electric-glow glow-electric">
-              <Plane className="h-4.5 w-4.5 text-navy-deep" strokeWidth={2.5} />
-            </div>
-            <div className="leading-tight">
-              <div className="font-display text-base font-bold tracking-tight">Wing Fires</div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                Parts · RFQ · Global
-              </div>
-            </div>
+            <BrandLogo size={38} subtitle="Parts · RFQ · Global" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
