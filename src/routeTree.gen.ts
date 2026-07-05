@@ -14,6 +14,8 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedVendorRouteImport } from './routes/_authenticated/vendor'
+import { Route as AuthenticatedCrmRouteImport } from './routes/_authenticated/crm'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const PartsRoute = PartsRouteImport.update({
   id: '/parts',
@@ -39,17 +41,31 @@ const AuthenticatedVendorRoute = AuthenticatedVendorRouteImport.update({
   path: '/vendor',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCrmRoute = AuthenticatedCrmRouteImport.update({
+  id: '/crm',
+  path: '/crm',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/parts': typeof PartsRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/crm': typeof AuthenticatedCrmRoute
   '/vendor': typeof AuthenticatedVendorRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/parts': typeof PartsRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/crm': typeof AuthenticatedCrmRoute
   '/vendor': typeof AuthenticatedVendorRoute
 }
 export interface FileRoutesById {
@@ -58,19 +74,23 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/parts': typeof PartsRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/crm': typeof AuthenticatedCrmRoute
   '/_authenticated/vendor': typeof AuthenticatedVendorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/parts' | '/vendor'
+  fullPaths: '/' | '/auth' | '/parts' | '/admin' | '/crm' | '/vendor'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/parts' | '/vendor'
+  to: '/' | '/auth' | '/parts' | '/admin' | '/crm' | '/vendor'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/parts'
+    | '/_authenticated/admin'
+    | '/_authenticated/crm'
     | '/_authenticated/vendor'
   fileRoutesById: FileRoutesById
 }
@@ -118,14 +138,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedVendorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/crm': {
+      id: '/_authenticated/crm'
+      path: '/crm'
+      fullPath: '/crm'
+      preLoaderRoute: typeof AuthenticatedCrmRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedCrmRoute: typeof AuthenticatedCrmRoute
   AuthenticatedVendorRoute: typeof AuthenticatedVendorRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedCrmRoute: AuthenticatedCrmRoute,
   AuthenticatedVendorRoute: AuthenticatedVendorRoute,
 }
 
