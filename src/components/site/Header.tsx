@@ -19,7 +19,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [bell, setBell] = useState(false);
   const [rfqOpen, setRfqOpen] = useState(false);
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
