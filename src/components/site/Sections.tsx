@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { RfqDialog, type RfqPrefill } from "./RfqDialog";
+
 import {
   Cog, Disc, Circle, Wrench, Gauge, Cpu, Plane, Zap, Fuel, Wind,
   Bolt, Filter, Layers, Battery, Lightbulb, Box, RotateCw, Package,
@@ -12,6 +15,8 @@ import landingGear from "@/assets/part-landing-gear.jpg";
 import apu from "@/assets/part-apu.jpg";
 import hydraulic from "@/assets/part-hydraulic.jpg";
 import brake from "@/assets/part-brake.jpg";
+import { BrandLogo } from "./BrandLogo";
+
 
 /* ------------------------------ SECTION SHELL ----------------------------- */
 function SectionHeader({ eyebrow, title, sub }: { eyebrow: string; title: React.ReactNode; sub?: string }) {
@@ -158,8 +163,9 @@ const CONDITION_COLOR: Record<string, string> = {
 };
 
 export function FeaturedParts() {
+  const [rfq, setRfq] = useState<RfqPrefill | null>(null);
   return (
-    <section id="featured" className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-surface/30 to-transparent">
+    <section id="featured" className="relative py-20 sm:py-24 md:py-32 bg-gradient-to-b from-transparent via-surface/30 to-transparent">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-end justify-between flex-wrap gap-4">
           <SectionHeader
@@ -168,14 +174,14 @@ export function FeaturedParts() {
           />
           <div className="flex flex-wrap gap-2">
             {["All", "Airbus", "Boeing", "Engines", "Avionics"].map((f, i) => (
-              <button key={f} className={`rounded-full px-4 py-1.5 text-xs border transition ${i === 0 ? "bg-electric text-navy-deep border-electric" : "glass text-silver hover:text-foreground border-white/10"}`}>
+              <button key={f} className={`rounded-full px-3 sm:px-4 py-1.5 text-xs border transition ${i === 0 ? "bg-electric text-navy-deep border-electric" : "glass text-silver hover:text-foreground border-white/10"}`}>
                 {f}
               </button>
             ))}
           </div>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 sm:mt-12 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {PARTS.map((p, i) => (
             <motion.article
               key={p.pn}
@@ -183,9 +189,10 @@ export function FeaturedParts() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ delay: (i % 3) * 0.08 }}
-              className="group glass-strong rounded-2xl overflow-hidden hover:border-electric/50 transition-all hover:-translate-y-1.5 hover:shadow-[0_25px_60px_-15px_rgba(96,165,250,0.35)]"
+              whileHover={{ y: -6 }}
+              className="group glass-strong rounded-2xl overflow-hidden hover:border-electric/50 transition-all hover:shadow-[0_25px_60px_-15px_rgba(96,165,250,0.35)]"
             >
-              <div className="relative h-52 overflow-hidden bg-navy-deep">
+              <div className="relative h-48 sm:h-52 overflow-hidden bg-navy-deep">
                 <img
                   src={p.img}
                   alt={p.name}
@@ -204,9 +211,9 @@ export function FeaturedParts() {
                   <div className="font-display text-lg font-bold text-electric-glow leading-none">{p.price}</div>
                 </div>
               </div>
-              <div className="p-5">
+              <div className="p-4 sm:p-5">
                 <div className="font-mono text-[11px] text-silver-dim">{p.pn}</div>
-                <div className="mt-1 font-semibold text-lg leading-tight">{p.name}</div>
+                <div className="mt-1 font-semibold text-base sm:text-lg leading-tight">{p.name}</div>
                 <div className="mt-2 text-sm text-silver-dim">{p.mfr}</div>
                 <div className="mt-3 flex items-center gap-3 text-xs text-silver">
                   <Plane className="h-3.5 w-3.5 text-electric" /> {p.ac}
@@ -219,17 +226,22 @@ export function FeaturedParts() {
                     <Clock className="h-3.5 w-3.5" /> {p.eta}
                   </div>
                 </div>
-                <a href="#rfq" className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white/5 hover:bg-gradient-to-br hover:from-electric hover:to-electric-glow hover:text-navy-deep py-2.5 text-sm font-semibold transition">
+                <button
+                  onClick={() => setRfq({ part_number: p.pn, part_name: p.name, manufacturer: p.mfr, aircraft: p.ac, condition: p.cond, quantity: 1 })}
+                  className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white/5 hover:bg-gradient-to-br hover:from-electric hover:to-electric-glow hover:text-navy-deep py-2.5 text-sm font-semibold transition"
+                >
                   Request Quote <ArrowRight className="h-4 w-4" />
-                </a>
+                </button>
               </div>
             </motion.article>
           ))}
         </div>
       </div>
+      <RfqDialog open={!!rfq} onClose={() => setRfq(null)} prefill={rfq ?? undefined} />
     </section>
   );
 }
+
 const MODELS = [
   "Airbus A320", "Airbus A330", "Airbus A350", "Boeing 737", "Boeing 747",
   "Boeing 777", "Boeing 787", "ATR 72", "Bombardier", "Embraer E-Jets",
@@ -490,12 +502,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-2.5">
-              <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-electric to-electric-glow">
-                <Plane className="h-4.5 w-4.5 text-navy-deep" strokeWidth={2.5} />
-              </div>
-              <div className="font-display text-lg font-bold">Wing Fires</div>
-            </div>
+            <BrandLogo size={40} subtitle="Aircraft Parts · RFQ · Global" />
             <p className="mt-4 text-sm text-silver-dim max-w-xs">
               The global marketplace for certified aircraft parts. Trusted by 2,500+ vendors across 85+ countries.
             </p>
@@ -504,6 +511,7 @@ export function Footer() {
               <button className="rounded-lg bg-gradient-to-br from-electric to-electric-glow px-4 py-2.5 text-sm font-semibold text-navy-deep">Subscribe</button>
             </form>
           </div>
+
           {[
             { h: "Marketplace", l: ["Browse Parts", "Categories", "Featured", "New Arrivals", "AOG Support"] },
             { h: "Solutions", l: ["Airlines", "MROs", "Brokers", "Leasing", "Vendors"] },
