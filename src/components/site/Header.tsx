@@ -59,13 +59,14 @@ export function Header() {
                 </Link>
               </nav>
 
-              <button
-                onClick={() => navigate({ to: "/parts", search: { focus: 1 } as any })}
+              <a
+                href="/parts?focus=1"
                 aria-label="Search parts"
                 className="hidden sm:grid h-9 w-9 place-items-center rounded-lg text-silver hover:text-foreground hover:bg-white/5 transition"
               >
                 <Search className="h-4 w-4" />
-              </button>
+              </a>
+
 
               <div className="relative">
                 <button
