@@ -12,6 +12,8 @@ import landingGear from "@/assets/part-landing-gear.jpg";
 import apu from "@/assets/part-apu.jpg";
 import hydraulic from "@/assets/part-hydraulic.jpg";
 import brake from "@/assets/part-brake.jpg";
+import { BrandLogo } from "./BrandLogo";
+
 
 /* ------------------------------ SECTION SHELL ----------------------------- */
 function SectionHeader({ eyebrow, title, sub }: { eyebrow: string; title: React.ReactNode; sub?: string }) {
