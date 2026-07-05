@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Bell, Menu, Search, User, X, Zap } from "lucide-react";
 import { BrandLogo } from "./BrandLogo";
 import { RfqDialog } from "./RfqDialog";
