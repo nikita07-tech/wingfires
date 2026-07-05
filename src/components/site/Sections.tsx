@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { RfqDialog, type RfqPrefill } from "./RfqDialog";
+
 import {
   Cog, Disc, Circle, Wrench, Gauge, Cpu, Plane, Zap, Fuel, Wind,
   Bolt, Filter, Layers, Battery, Lightbulb, Box, RotateCw, Package,
