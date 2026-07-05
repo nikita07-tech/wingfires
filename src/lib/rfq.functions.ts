@@ -76,20 +76,16 @@ export const submitRfq = createServerFn({ method: "POST" })
     // Fire-and-forget log to Google Sheets
     const created = new Date().toISOString();
     const sheetResult = await pushToGoogleSheet([
-      leadId,
-      created,
-      data.part_number,
-      data.part_name,
-      data.manufacturer,
-      data.aircraft,
-      data.quantity,
-      data.condition,
-      data.buyer_name,
-      data.buyer_email,
-      data.buyer_company,
-      data.notes,
-      "open",
+      leadId, created, data.part_number, data.part_name, data.manufacturer,
+      data.aircraft, data.quantity, data.condition, data.buyer_name,
+      data.buyer_email, data.buyer_company, data.notes, "open",
     ]);
 
+    // TODO: email wingfire987@gmail.com — requires a verified sender domain
+    // (Gmail cannot be a sender). Will be wired via the Lovable Emails
+    // scaffold once the user completes the email domain setup dialog.
+    console.log(`[rfq] would notify wingfire987@gmail.com about ${leadId}`);
+
     return { leadId, sheet: sheetResult };
+
   });
