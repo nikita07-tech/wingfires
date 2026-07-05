@@ -490,12 +490,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-2.5">
-              <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-electric to-electric-glow">
-                <Plane className="h-4.5 w-4.5 text-navy-deep" strokeWidth={2.5} />
-              </div>
-              <div className="font-display text-lg font-bold">Wing Fires</div>
-            </div>
+            <BrandLogo size={40} subtitle="Aircraft Parts · RFQ · Global" />
             <p className="mt-4 text-sm text-silver-dim max-w-xs">
               The global marketplace for certified aircraft parts. Trusted by 2,500+ vendors across 85+ countries.
             </p>
@@ -504,6 +499,7 @@ export function Footer() {
               <button className="rounded-lg bg-gradient-to-br from-electric to-electric-glow px-4 py-2.5 text-sm font-semibold text-navy-deep">Subscribe</button>
             </form>
           </div>
+
           {[
             { h: "Marketplace", l: ["Browse Parts", "Categories", "Featured", "New Arrivals", "AOG Support"] },
             { h: "Solutions", l: ["Airlines", "MROs", "Brokers", "Leasing", "Vendors"] },
