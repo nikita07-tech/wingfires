@@ -16,6 +16,8 @@ import apu from "@/assets/part-apu.jpg";
 import hydraulic from "@/assets/part-hydraulic.jpg";
 import brake from "@/assets/part-brake.jpg";
 import { BrandLogo } from "./BrandLogo";
+import { Tilt3D } from "./Tilt3D";
+import { Mail, MessageCircle, Phone } from "lucide-react";
 
 
 /* ------------------------------ SECTION SHELL ----------------------------- */
@@ -25,8 +27,8 @@ function SectionHeader({ eyebrow, title, sub }: { eyebrow: string; title: React.
       <div className="inline-flex items-center gap-2 glass rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-electric">
         <span className="h-1 w-1 rounded-full bg-electric" /> {eyebrow}
       </div>
-      <h2 className="mt-4 text-4xl md:text-5xl font-bold tracking-tight">{title}</h2>
-      {sub && <p className="mt-4 text-silver-dim text-lg">{sub}</p>}
+      <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.05]">{title}</h2>
+      {sub && <p className="mt-3 sm:mt-4 text-silver-dim text-base sm:text-lg">{sub}</p>}
     </div>
   );
 }
@@ -183,57 +185,59 @@ export function FeaturedParts() {
 
         <div className="mt-10 sm:mt-12 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {PARTS.map((p, i) => (
-            <motion.article
+            <motion.div
               key={p.pn}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ delay: (i % 3) * 0.08 }}
-              whileHover={{ y: -6 }}
-              className="group glass-strong rounded-2xl overflow-hidden hover:border-electric/50 transition-all hover:shadow-[0_25px_60px_-15px_rgba(96,165,250,0.35)]"
             >
-              <div className="relative h-48 sm:h-52 overflow-hidden bg-navy-deep">
-                <img
-                  src={p.img}
-                  alt={p.name}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-transparent to-transparent" />
-                <div className="absolute top-3 left-3 flex gap-1.5">
-                  <span className={`rounded-md border px-2 py-0.5 text-[10px] font-medium ${CONDITION_COLOR[p.cond]}`}>{p.cond}</span>
-                </div>
-                <div className="absolute top-3 right-3 rounded-md glass px-2 py-0.5 text-[10px] font-mono text-silver">
-                  {p.stock}
-                </div>
-                <div className="absolute bottom-3 left-3 rounded-lg glass-strong px-3 py-1.5">
-                  <div className="font-mono text-[10px] uppercase tracking-widest text-silver-dim">From</div>
-                  <div className="font-display text-lg font-bold text-electric-glow leading-none">{p.price}</div>
-                </div>
-              </div>
-              <div className="p-4 sm:p-5">
-                <div className="font-mono text-[11px] text-silver-dim">{p.pn}</div>
-                <div className="mt-1 font-semibold text-base sm:text-lg leading-tight">{p.name}</div>
-                <div className="mt-2 text-sm text-silver-dim">{p.mfr}</div>
-                <div className="mt-3 flex items-center gap-3 text-xs text-silver">
-                  <Plane className="h-3.5 w-3.5 text-electric" /> {p.ac}
-                </div>
-                <div className="mt-4 flex items-center justify-between pt-4 border-t border-white/5">
-                  <div className="flex items-center gap-1.5 text-[11px] text-silver-dim">
-                    <ShieldCheck className="h-3.5 w-3.5 text-electric" /> {p.cert}
+              <Tilt3D className="h-full">
+                <article className="group glass-strong rounded-2xl overflow-hidden hover:border-electric/50 transition-all hover:shadow-[0_25px_60px_-15px_rgba(96,165,250,0.35)] h-full">
+                  <div className="relative h-48 sm:h-52 overflow-hidden bg-navy-deep" style={{ transform: "translateZ(30px)" }}>
+                    <img
+                      src={p.img}
+                      alt={p.name}
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-transparent to-transparent" />
+                    <div className="absolute top-3 left-3 flex gap-1.5">
+                      <span className={`rounded-md border px-2 py-0.5 text-[10px] font-medium ${CONDITION_COLOR[p.cond]}`}>{p.cond}</span>
+                    </div>
+                    <div className="absolute top-3 right-3 rounded-md glass px-2 py-0.5 text-[10px] font-mono text-silver">
+                      {p.stock}
+                    </div>
+                    <div className="absolute bottom-3 left-3 rounded-lg glass-strong px-3 py-1.5" style={{ transform: "translateZ(40px)" }}>
+                      <div className="font-mono text-[10px] uppercase tracking-widest text-silver-dim">From</div>
+                      <div className="font-display text-lg font-bold text-electric-glow leading-none">{p.price}</div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[11px] text-silver-dim">
-                    <Clock className="h-3.5 w-3.5" /> {p.eta}
+                  <div className="p-4 sm:p-5" style={{ transform: "translateZ(20px)" }}>
+                    <div className="font-mono text-[11px] text-silver-dim">{p.pn}</div>
+                    <div className="mt-1 font-semibold text-base sm:text-lg leading-tight">{p.name}</div>
+                    <div className="mt-2 text-sm text-silver-dim">{p.mfr}</div>
+                    <div className="mt-3 flex items-center gap-3 text-xs text-silver">
+                      <Plane className="h-3.5 w-3.5 text-electric" /> {p.ac}
+                    </div>
+                    <div className="mt-4 flex items-center justify-between pt-4 border-t border-white/5">
+                      <div className="flex items-center gap-1.5 text-[11px] text-silver-dim">
+                        <ShieldCheck className="h-3.5 w-3.5 text-electric" /> {p.cert}
+                      </div>
+                      <div className="flex items-center gap-1.5 text-[11px] text-silver-dim">
+                        <Clock className="h-3.5 w-3.5" /> {p.eta}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setRfq({ part_number: p.pn, part_name: p.name, manufacturer: p.mfr, aircraft: p.ac, condition: p.cond, quantity: 1 })}
+                      className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white/5 hover:bg-gradient-to-br hover:from-electric hover:to-electric-glow hover:text-navy-deep py-2.5 text-sm font-semibold transition"
+                    >
+                      Request Quote <ArrowRight className="h-4 w-4" />
+                    </button>
                   </div>
-                </div>
-                <button
-                  onClick={() => setRfq({ part_number: p.pn, part_name: p.name, manufacturer: p.mfr, aircraft: p.ac, condition: p.cond, quantity: 1 })}
-                  className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white/5 hover:bg-gradient-to-br hover:from-electric hover:to-electric-glow hover:text-navy-deep py-2.5 text-sm font-semibold transition"
-                >
-                  Request Quote <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-            </motion.article>
+                </article>
+              </Tilt3D>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -497,10 +501,11 @@ export function CTA() {
 
 /* --------------------------------- FOOTER -------------------------------- */
 export function Footer() {
+  const waMsg = encodeURIComponent("Hi Wing Fires, I'd like to enquire about aircraft parts.");
   return (
-    <footer className="relative border-t border-white/5 bg-surface/40 pt-20 pb-8">
+    <footer id="contact" className="relative border-t border-white/5 bg-surface/40 pt-16 sm:pt-20 pb-8">
       <div className="mx-auto max-w-7xl px-4">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>
             <BrandLogo size={40} subtitle="Aircraft Parts · RFQ · Global" />
             <p className="mt-4 text-sm text-silver-dim max-w-xs">
@@ -515,8 +520,6 @@ export function Footer() {
           {[
             { h: "Marketplace", l: ["Browse Parts", "Categories", "Featured", "New Arrivals", "AOG Support"] },
             { h: "Solutions", l: ["Airlines", "MROs", "Brokers", "Leasing", "Vendors"] },
-            { h: "Company", l: ["About", "Careers", "Press", "Blog", "Contact"] },
-            { h: "Legal", l: ["Terms", "Privacy", "Cookies", "Compliance", "Security"] },
           ].map((col) => (
             <div key={col.h}>
               <div className="font-mono text-[10px] uppercase tracking-widest text-silver-dim">{col.h}</div>
@@ -527,8 +530,51 @@ export function Footer() {
               </ul>
             </div>
           ))}
+
+          <div>
+            <div className="font-mono text-[10px] uppercase tracking-widest text-silver-dim">Contact Us</div>
+            <ul className="mt-4 space-y-3 text-sm">
+              <li>
+                <a href="mailto:components@wingfires.com" className="group flex items-start gap-2.5 text-silver hover:text-foreground transition">
+                  <Mail className="h-4 w-4 mt-0.5 text-electric shrink-0" />
+                  <span className="min-w-0 break-all">components@wingfires.com</span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:wingfire987@gmail.com" className="group flex items-start gap-2.5 text-silver hover:text-foreground transition">
+                  <Mail className="h-4 w-4 mt-0.5 text-electric shrink-0" />
+                  <span className="min-w-0 break-all">wingfire987@gmail.com</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://wa.me/919149950141?text=${waMsg}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-start gap-2.5 text-silver hover:text-foreground transition"
+                >
+                  <MessageCircle className="h-4 w-4 mt-0.5 text-[#25D366] shrink-0" />
+                  <span>WhatsApp: +91 91499 50141</span>
+                </a>
+              </li>
+              <li>
+                <a href="tel:+919149950141" className="group flex items-start gap-2.5 text-silver hover:text-foreground transition">
+                  <Phone className="h-4 w-4 mt-0.5 text-electric shrink-0" />
+                  <span>+91 91499 50141</span>
+                </a>
+              </li>
+            </ul>
+            <a
+              href={`https://wa.me/919149950141?text=${waMsg}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-gradient-to-br from-[#25D366] to-[#128C7E] px-3.5 py-2 text-xs font-semibold text-white shadow-[0_8px_20px_-5px_rgba(37,211,102,0.5)]"
+            >
+              <MessageCircle className="h-3.5 w-3.5" /> Chat on WhatsApp
+            </a>
+          </div>
         </div>
-        <div className="mt-16 pt-8 border-t border-white/5 flex flex-wrap items-center justify-between gap-4 text-xs text-silver-dim">
+        <div className="mt-14 sm:mt-16 pt-8 border-t border-white/5 flex flex-wrap items-center justify-between gap-4 text-xs text-silver-dim">
           <div id="footer">© {new Date().getFullYear()} Wing Fires. All rights reserved.</div>
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-electric" /> FAA / EASA Compliant</span>
