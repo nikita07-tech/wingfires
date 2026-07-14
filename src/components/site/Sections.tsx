@@ -25,8 +25,8 @@ function SectionHeader({ eyebrow, title, sub }: { eyebrow: string; title: React.
       <div className="inline-flex items-center gap-2 glass rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-electric">
         <span className="h-1 w-1 rounded-full bg-electric" /> {eyebrow}
       </div>
-      <h2 className="mt-4 text-4xl md:text-5xl font-bold tracking-tight">{title}</h2>
-      {sub && <p className="mt-4 text-silver-dim text-lg">{sub}</p>}
+      <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.05]">{title}</h2>
+      {sub && <p className="mt-3 sm:mt-4 text-silver-dim text-base sm:text-lg">{sub}</p>}
     </div>
   );
 }
