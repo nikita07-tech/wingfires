@@ -16,6 +16,8 @@ import apu from "@/assets/part-apu.jpg";
 import hydraulic from "@/assets/part-hydraulic.jpg";
 import brake from "@/assets/part-brake.jpg";
 import { BrandLogo } from "./BrandLogo";
+import { Tilt3D } from "./Tilt3D";
+import { Mail, MessageCircle, Phone } from "lucide-react";
 
 
 /* ------------------------------ SECTION SHELL ----------------------------- */
