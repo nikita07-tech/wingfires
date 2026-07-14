@@ -185,57 +185,59 @@ export function FeaturedParts() {
 
         <div className="mt-10 sm:mt-12 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {PARTS.map((p, i) => (
-            <motion.article
+            <motion.div
               key={p.pn}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ delay: (i % 3) * 0.08 }}
-              whileHover={{ y: -6 }}
-              className="group glass-strong rounded-2xl overflow-hidden hover:border-electric/50 transition-all hover:shadow-[0_25px_60px_-15px_rgba(96,165,250,0.35)]"
             >
-              <div className="relative h-48 sm:h-52 overflow-hidden bg-navy-deep">
-                <img
-                  src={p.img}
-                  alt={p.name}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-transparent to-transparent" />
-                <div className="absolute top-3 left-3 flex gap-1.5">
-                  <span className={`rounded-md border px-2 py-0.5 text-[10px] font-medium ${CONDITION_COLOR[p.cond]}`}>{p.cond}</span>
-                </div>
-                <div className="absolute top-3 right-3 rounded-md glass px-2 py-0.5 text-[10px] font-mono text-silver">
-                  {p.stock}
-                </div>
-                <div className="absolute bottom-3 left-3 rounded-lg glass-strong px-3 py-1.5">
-                  <div className="font-mono text-[10px] uppercase tracking-widest text-silver-dim">From</div>
-                  <div className="font-display text-lg font-bold text-electric-glow leading-none">{p.price}</div>
-                </div>
-              </div>
-              <div className="p-4 sm:p-5">
-                <div className="font-mono text-[11px] text-silver-dim">{p.pn}</div>
-                <div className="mt-1 font-semibold text-base sm:text-lg leading-tight">{p.name}</div>
-                <div className="mt-2 text-sm text-silver-dim">{p.mfr}</div>
-                <div className="mt-3 flex items-center gap-3 text-xs text-silver">
-                  <Plane className="h-3.5 w-3.5 text-electric" /> {p.ac}
-                </div>
-                <div className="mt-4 flex items-center justify-between pt-4 border-t border-white/5">
-                  <div className="flex items-center gap-1.5 text-[11px] text-silver-dim">
-                    <ShieldCheck className="h-3.5 w-3.5 text-electric" /> {p.cert}
+              <Tilt3D className="h-full">
+                <article className="group glass-strong rounded-2xl overflow-hidden hover:border-electric/50 transition-all hover:shadow-[0_25px_60px_-15px_rgba(96,165,250,0.35)] h-full">
+                  <div className="relative h-48 sm:h-52 overflow-hidden bg-navy-deep" style={{ transform: "translateZ(30px)" }}>
+                    <img
+                      src={p.img}
+                      alt={p.name}
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-transparent to-transparent" />
+                    <div className="absolute top-3 left-3 flex gap-1.5">
+                      <span className={`rounded-md border px-2 py-0.5 text-[10px] font-medium ${CONDITION_COLOR[p.cond]}`}>{p.cond}</span>
+                    </div>
+                    <div className="absolute top-3 right-3 rounded-md glass px-2 py-0.5 text-[10px] font-mono text-silver">
+                      {p.stock}
+                    </div>
+                    <div className="absolute bottom-3 left-3 rounded-lg glass-strong px-3 py-1.5" style={{ transform: "translateZ(40px)" }}>
+                      <div className="font-mono text-[10px] uppercase tracking-widest text-silver-dim">From</div>
+                      <div className="font-display text-lg font-bold text-electric-glow leading-none">{p.price}</div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[11px] text-silver-dim">
-                    <Clock className="h-3.5 w-3.5" /> {p.eta}
+                  <div className="p-4 sm:p-5" style={{ transform: "translateZ(20px)" }}>
+                    <div className="font-mono text-[11px] text-silver-dim">{p.pn}</div>
+                    <div className="mt-1 font-semibold text-base sm:text-lg leading-tight">{p.name}</div>
+                    <div className="mt-2 text-sm text-silver-dim">{p.mfr}</div>
+                    <div className="mt-3 flex items-center gap-3 text-xs text-silver">
+                      <Plane className="h-3.5 w-3.5 text-electric" /> {p.ac}
+                    </div>
+                    <div className="mt-4 flex items-center justify-between pt-4 border-t border-white/5">
+                      <div className="flex items-center gap-1.5 text-[11px] text-silver-dim">
+                        <ShieldCheck className="h-3.5 w-3.5 text-electric" /> {p.cert}
+                      </div>
+                      <div className="flex items-center gap-1.5 text-[11px] text-silver-dim">
+                        <Clock className="h-3.5 w-3.5" /> {p.eta}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setRfq({ part_number: p.pn, part_name: p.name, manufacturer: p.mfr, aircraft: p.ac, condition: p.cond, quantity: 1 })}
+                      className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white/5 hover:bg-gradient-to-br hover:from-electric hover:to-electric-glow hover:text-navy-deep py-2.5 text-sm font-semibold transition"
+                    >
+                      Request Quote <ArrowRight className="h-4 w-4" />
+                    </button>
                   </div>
-                </div>
-                <button
-                  onClick={() => setRfq({ part_number: p.pn, part_name: p.name, manufacturer: p.mfr, aircraft: p.ac, condition: p.cond, quantity: 1 })}
-                  className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white/5 hover:bg-gradient-to-br hover:from-electric hover:to-electric-glow hover:text-navy-deep py-2.5 text-sm font-semibold transition"
-                >
-                  Request Quote <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-            </motion.article>
+                </article>
+              </Tilt3D>
+            </motion.div>
           ))}
         </div>
       </div>
