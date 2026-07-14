@@ -501,10 +501,11 @@ export function CTA() {
 
 /* --------------------------------- FOOTER -------------------------------- */
 export function Footer() {
+  const waMsg = encodeURIComponent("Hi Wing Fires, I'd like to enquire about aircraft parts.");
   return (
-    <footer className="relative border-t border-white/5 bg-surface/40 pt-20 pb-8">
+    <footer id="contact" className="relative border-t border-white/5 bg-surface/40 pt-16 sm:pt-20 pb-8">
       <div className="mx-auto max-w-7xl px-4">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>
             <BrandLogo size={40} subtitle="Aircraft Parts · RFQ · Global" />
             <p className="mt-4 text-sm text-silver-dim max-w-xs">
@@ -519,8 +520,6 @@ export function Footer() {
           {[
             { h: "Marketplace", l: ["Browse Parts", "Categories", "Featured", "New Arrivals", "AOG Support"] },
             { h: "Solutions", l: ["Airlines", "MROs", "Brokers", "Leasing", "Vendors"] },
-            { h: "Company", l: ["About", "Careers", "Press", "Blog", "Contact"] },
-            { h: "Legal", l: ["Terms", "Privacy", "Cookies", "Compliance", "Security"] },
           ].map((col) => (
             <div key={col.h}>
               <div className="font-mono text-[10px] uppercase tracking-widest text-silver-dim">{col.h}</div>
@@ -531,8 +530,51 @@ export function Footer() {
               </ul>
             </div>
           ))}
+
+          <div>
+            <div className="font-mono text-[10px] uppercase tracking-widest text-silver-dim">Contact Us</div>
+            <ul className="mt-4 space-y-3 text-sm">
+              <li>
+                <a href="mailto:components@wingfires.com" className="group flex items-start gap-2.5 text-silver hover:text-foreground transition">
+                  <Mail className="h-4 w-4 mt-0.5 text-electric shrink-0" />
+                  <span className="min-w-0 break-all">components@wingfires.com</span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:wingfire987@gmail.com" className="group flex items-start gap-2.5 text-silver hover:text-foreground transition">
+                  <Mail className="h-4 w-4 mt-0.5 text-electric shrink-0" />
+                  <span className="min-w-0 break-all">wingfire987@gmail.com</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://wa.me/919149950141?text=${waMsg}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-start gap-2.5 text-silver hover:text-foreground transition"
+                >
+                  <MessageCircle className="h-4 w-4 mt-0.5 text-[#25D366] shrink-0" />
+                  <span>WhatsApp: +91 91499 50141</span>
+                </a>
+              </li>
+              <li>
+                <a href="tel:+919149950141" className="group flex items-start gap-2.5 text-silver hover:text-foreground transition">
+                  <Phone className="h-4 w-4 mt-0.5 text-electric shrink-0" />
+                  <span>+91 91499 50141</span>
+                </a>
+              </li>
+            </ul>
+            <a
+              href={`https://wa.me/919149950141?text=${waMsg}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-gradient-to-br from-[#25D366] to-[#128C7E] px-3.5 py-2 text-xs font-semibold text-white shadow-[0_8px_20px_-5px_rgba(37,211,102,0.5)]"
+            >
+              <MessageCircle className="h-3.5 w-3.5" /> Chat on WhatsApp
+            </a>
+          </div>
         </div>
-        <div className="mt-16 pt-8 border-t border-white/5 flex flex-wrap items-center justify-between gap-4 text-xs text-silver-dim">
+        <div className="mt-14 sm:mt-16 pt-8 border-t border-white/5 flex flex-wrap items-center justify-between gap-4 text-xs text-silver-dim">
           <div id="footer">© {new Date().getFullYear()} Wing Fires. All rights reserved.</div>
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-electric" /> FAA / EASA Compliant</span>
