@@ -302,3 +302,57 @@ function InteractivePlane({ src }: { src: string }) {
     </div>
   );
 }
+
+function InteractiveTurbine({ src }: { src: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  // Scroll-driven rotation on top of the CSS spin
+  const scrollRot = useTransform(scrollY, [0, 1200], [0, 360]);
+  const scrollRotSpring = useSpring(scrollRot, { stiffness: 40, damping: 20 });
+
+  // Mouse-driven 3D tilt
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rx = useSpring(useTransform(my, [-1, 1], [18, -18]), { stiffness: 90, damping: 14 });
+  const ry = useSpring(useTransform(mx, [-1, 1], [-22, 22]), { stiffness: 90, damping: 14 });
+
+  useEffect(() => {
+    function onMove(e: PointerEvent) {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      mx.set((e.clientX / w) * 2 - 1);
+      my.set((e.clientY / h) * 2 - 1);
+    }
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [mx, my]);
+
+  return (
+    <div
+      ref={ref}
+      className="pointer-events-none absolute -right-32 sm:-right-40 top-16 sm:top-20 w-[480px] h-[480px] sm:w-[620px] sm:h-[620px] md:w-[720px] md:h-[720px] opacity-30 sm:opacity-45 md:opacity-60"
+      style={{ perspective: 1400 }}
+    >
+      <motion.div
+        style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
+        className="relative h-full w-full animate-float-slow"
+      >
+        <motion.img
+          src={src}
+          alt=""
+          style={{ rotate: scrollRotSpring, translateZ: 60 }}
+          className="h-full w-full object-cover rounded-full animate-spin-slow will-change-transform"
+          // Radial mask feathers edges to blend with hero background
+          {...({} as object)}
+        />
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: "radial-gradient(circle at 50% 50%, transparent 45%, hsl(var(--background)) 74%)",
+          }}
+        />
+      </motion.div>
+    </div>
+  );
+}
+
