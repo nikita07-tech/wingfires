@@ -8,6 +8,9 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
+  validateSearch: (s: Record<string, unknown>) => ({
+    next: typeof s.next === "string" && s.next.startsWith("/") && !s.next.startsWith("//") ? s.next : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Vendor Sign In · Wing Fires" },
@@ -19,6 +22,12 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const search = Route.useSearch();
+  const nextPath = search.next;
+  const goNext = () => {
+    if (nextPath) window.location.href = nextPath;
+    else navigate({ to: "/vendor" });
+  };
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,20 +36,24 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (data.user) navigate({ to: "/vendor" });
+      if (data.user) {
+        if (nextPath) window.location.href = nextPath;
+        else navigate({ to: "/vendor" });
+      }
     });
-  }, [navigate]);
+  }, [navigate, nextPath]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     try {
+      const redirectTarget = window.location.origin + (nextPath ?? "/vendor");
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: window.location.origin + "/vendor",
+            emailRedirectTo: redirectTarget,
             data: { company_name: company, contact_name: email.split("@")[0] },
           },
         });
@@ -51,7 +64,7 @@ function AuthPage() {
         if (error) throw error;
         toast.success("Welcome back.");
       }
-      navigate({ to: "/vendor" });
+      goNext();
     } catch (err) {
       toast.error((err as Error).message);
     } finally {
@@ -60,10 +73,11 @@ function AuthPage() {
   }
 
   async function onGoogle() {
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/vendor" });
+    const redirectTarget = window.location.origin + (nextPath ?? "/vendor");
+    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: redirectTarget });
     if (result.error) toast.error(result.error.message ?? "Google sign-in failed");
     if (result.redirected) return;
-    navigate({ to: "/vendor" });
+    goNext();
   }
 
   return (
