@@ -342,9 +342,8 @@ function InteractiveTurbine({ src }: { src: string }) {
           alt=""
           style={{ rotate: scrollRotSpring, translateZ: 60 }}
           className="h-full w-full object-cover rounded-full animate-spin-slow will-change-transform"
-          // Radial mask feathers edges to blend with hero background
-          {...({} as object)}
         />
+
         <div
           className="absolute inset-0 rounded-full"
           style={{
