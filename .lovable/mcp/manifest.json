@@ -1,0 +1,257 @@
+{
+  "version": 1,
+  "sdk_version": "0.23.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://gkraxcqbnrrwbyjrozbl.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "wing-fires-mcp",
+      "version": "0.1.0",
+      "title": "Wing Fires MCP"
+    },
+    "tools": [
+      {
+        "name": "list_open_rfqs",
+        "title": "List open RFQs",
+        "description": "List currently open Wing Fires RFQs (aircraft parts requests) that vendors can quote on. Returns buyer_company and part details; buyer PII is excluded by RLS.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "limit": {
+              "default": 25,
+              "description": "Max RFQs to return.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_rfq",
+        "title": "Get RFQ details",
+        "description": "Fetch the full public details of a single Wing Fires RFQ by its UUID.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "rfq_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "The RFQ UUID."
+            }
+          },
+          "required": [
+            "rfq_id"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_quotes",
+        "title": "List my quotes",
+        "description": "List the signed-in vendor's own quotes across all RFQs, newest first, with status (submitted/accepted/won/rejected).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "limit": {
+              "default": 25,
+              "description": "Max quotes to return.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "submit_quote",
+        "title": "Submit quote",
+        "description": "Submit a new vendor quote for a Wing Fires RFQ. The quote is created for the signed-in vendor.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "rfq_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "description": "Target RFQ UUID."
+            },
+            "price": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Unit price."
+            },
+            "currency": {
+              "default": "USD",
+              "description": "ISO currency code.",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 6
+            },
+            "lead_time": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 60,
+              "description": "Lead time, e.g. '2 weeks', 'AOG ex-stock'."
+            },
+            "stock_qty": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "description": "Available quantity in stock."
+            },
+            "shipping": {
+              "default": "",
+              "description": "Shipping terms/notes.",
+              "type": "string",
+              "maxLength": 120
+            },
+            "warranty": {
+              "default": "",
+              "description": "Warranty terms.",
+              "type": "string",
+              "maxLength": 120
+            },
+            "certificate": {
+              "default": "",
+              "description": "Certification (e.g. 8130-3, EASA Form 1).",
+              "type": "string",
+              "maxLength": 120
+            },
+            "notes": {
+              "default": "",
+              "description": "Additional notes.",
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "rfq_id",
+            "price",
+            "lead_time",
+            "stock_qty"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "submit_rfq",
+        "title": "Submit RFQ",
+        "description": "Create a new Wing Fires Request For Quote (RFQ) as the signed-in user. Returns the generated Lead ID.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "part_number": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "description": "Part number."
+            },
+            "part_name": {
+              "default": "",
+              "description": "Human-readable part name.",
+              "type": "string",
+              "maxLength": 200
+            },
+            "aircraft": {
+              "default": "",
+              "description": "Aircraft type, e.g. 'A320neo'.",
+              "type": "string",
+              "maxLength": 120
+            },
+            "manufacturer": {
+              "default": "",
+              "description": "OEM/manufacturer.",
+              "type": "string",
+              "maxLength": 120
+            },
+            "quantity": {
+              "default": 1,
+              "description": "Quantity required.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "condition": {
+              "default": "NE",
+              "description": "NE / NS / OH / SV / AR.",
+              "type": "string",
+              "maxLength": 30
+            },
+            "buyer_company": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "description": "Buyer company name."
+            },
+            "buyer_name": {
+              "default": "",
+              "description": "Contact person.",
+              "type": "string",
+              "maxLength": 200
+            },
+            "buyer_email": {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+              "description": "Contact email."
+            },
+            "notes": {
+              "default": "",
+              "description": "Additional notes.",
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "required": [
+            "part_number",
+            "buyer_company",
+            "buyer_email"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
