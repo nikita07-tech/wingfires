@@ -97,18 +97,19 @@ export function Hero() {
           </p>
 
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#rfq" className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-electric to-electric-glow px-6 py-3.5 text-sm font-semibold text-navy-deep glow-electric hover:scale-[1.02] transition-transform">
+          <div className="mt-6 sm:mt-8 flex flex-wrap gap-2 sm:gap-3">
+            <a href="#rfq" className="group inline-flex min-h-11 items-center gap-2 rounded-xl bg-gradient-to-br from-electric to-electric-glow px-5 sm:px-6 py-3 sm:py-3.5 text-sm font-semibold text-navy-deep glow-electric hover:scale-[1.02] transition-transform">
               <Zap className="h-4 w-4" /> Get Instant Quote
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
-            <a href="#catalog" className="inline-flex items-center gap-2 glass-strong rounded-xl px-6 py-3.5 text-sm font-semibold hover:bg-white/10 transition">
+            <a href="#catalog" className="inline-flex min-h-11 items-center gap-2 glass-strong rounded-xl px-5 sm:px-6 py-3 sm:py-3.5 text-sm font-semibold hover:bg-white/10 transition">
               Find Aircraft Parts
             </a>
-            <a href="/vendor" className="inline-flex items-center gap-2 rounded-xl border border-silver/20 px-6 py-3.5 text-sm font-semibold text-silver hover:border-silver/40 transition">
+            <a href="/vendor" className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-silver/20 px-5 sm:px-6 py-3 sm:py-3.5 text-sm font-semibold text-silver hover:border-silver/40 transition">
               Become a Vendor
             </a>
           </div>
+
         </motion.div>
 
         <motion.form
