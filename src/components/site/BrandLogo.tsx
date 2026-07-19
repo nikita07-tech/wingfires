@@ -23,13 +23,14 @@ export function BrandLogo({
           decoding="async"
         />
       </span>
+
       {showText && (
         <span className="leading-tight">
           <span className="block font-display text-base font-bold tracking-tight">
             Wing <span className="text-gradient-electric">Fires</span>
           </span>
           {subtitle && (
-            <span className="block font-mono text-[10px] uppercase tracking-widest text-silver-dim">
+            <span className="block text-[11px] uppercase tracking-[0.28em] text-white/65">
               {subtitle}
             </span>
           )}
