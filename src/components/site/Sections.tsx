@@ -297,7 +297,7 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-surface/30 to-transparent">
+    <section id="how" className="relative scroll-mt-24 py-20 sm:py-24 md:py-32 bg-gradient-to-b from-transparent via-surface/30 to-transparent">
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeader
           eyebrow="Procurement Flow"
@@ -346,7 +346,7 @@ const SERVICES = [
 
 export function Services() {
   return (
-    <section className="relative py-24 md:py-32">
+    <section id="services" className="relative scroll-mt-24 py-20 sm:py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeader
           eyebrow="Services"
