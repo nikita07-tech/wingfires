@@ -68,7 +68,7 @@ const MORE_CATEGORIES: Category[] = [
 
 export function Catalog() {
   return (
-    <section id="catalog" className="relative py-24 md:py-32">
+    <section id="catalog" className="relative scroll-mt-24 py-20 sm:py-24 md:py-32">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-electric/40 to-transparent" />
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeader
@@ -167,7 +167,7 @@ const CONDITION_COLOR: Record<string, string> = {
 export function FeaturedParts() {
   const [rfq, setRfq] = useState<RfqPrefill | null>(null);
   return (
-    <section id="featured" className="relative py-20 sm:py-24 md:py-32 bg-gradient-to-b from-transparent via-surface/30 to-transparent">
+    <section id="featured" className="relative scroll-mt-24 py-20 sm:py-24 md:py-32 bg-gradient-to-b from-transparent via-surface/30 to-transparent">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-end justify-between flex-wrap gap-4">
           <SectionHeader
@@ -297,7 +297,7 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-surface/30 to-transparent">
+    <section id="how" className="relative scroll-mt-24 py-20 sm:py-24 md:py-32 bg-gradient-to-b from-transparent via-surface/30 to-transparent">
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeader
           eyebrow="Procurement Flow"
@@ -346,7 +346,7 @@ const SERVICES = [
 
 export function Services() {
   return (
-    <section className="relative py-24 md:py-32">
+    <section id="services" className="relative scroll-mt-24 py-20 sm:py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeader
           eyebrow="Services"
@@ -456,7 +456,7 @@ export function Testimonials() {
 /* --------------------------------- CTA ----------------------------------- */
 export function CTA() {
   return (
-    <section id="vendor" className="relative py-24 md:py-32">
+    <section id="vendor" className="relative scroll-mt-24 py-20 sm:py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-4">
         <div className="relative overflow-hidden glass-strong rounded-3xl p-10 md:p-16">
           <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-electric/20 blur-3xl" />

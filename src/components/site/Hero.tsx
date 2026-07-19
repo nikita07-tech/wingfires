@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight, Search, Sparkles, Zap, CheckCircle2, MousePointer2 } from "lucide-react";
 import { toast } from "sonner";
@@ -45,20 +45,12 @@ export function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-hero pt-28 pb-16">
+    <section className="relative min-h-screen overflow-hidden bg-hero pt-24 sm:pt-28 pb-12 sm:pb-16">
       <div className="absolute inset-0 bg-grid opacity-60" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
 
-      <div className="pointer-events-none absolute -right-40 top-20 w-[720px] h-[720px] opacity-40 md:opacity-60">
-        <div className="relative h-full w-full animate-float-slow">
-          <img
-            src={turbine}
-            alt=""
-            className="h-full w-full object-cover rounded-full animate-spin-slow"
-            style={{ maskImage: "radial-gradient(circle, black 55%, transparent 72%)" }}
-          />
-        </div>
-      </div>
+      <InteractiveTurbine src={turbine} />
+
 
       <InteractivePlane src={aircraft} />
 
@@ -94,28 +86,30 @@ export function Hero() {
             <span className="text-silver">Trusted by 2,500+ MROs, airlines & brokers worldwide</span>
           </div>
 
-          <h1 className="mt-6 text-5xl md:text-7xl font-bold leading-[1.02] tracking-tight">
+          <h1 className="mt-6 font-bold leading-[1.05] tracking-tight text-[clamp(2rem,7vw,4.75rem)]">
             The global marketplace for
             <span className="block text-gradient-electric">certified aircraft parts.</span>
           </h1>
 
-          <p className="mt-5 max-w-xl text-lg text-silver-dim">
+          <p className="mt-4 sm:mt-5 max-w-xl text-[15px] sm:text-lg text-silver-dim">
             Wing Fires sources engine components, avionics, landing gear and consumables from verified
             vendors in 85+ countries. Instant RFQs, transparent quotes, AOG-ready in minutes.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#rfq" className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-electric to-electric-glow px-6 py-3.5 text-sm font-semibold text-navy-deep glow-electric hover:scale-[1.02] transition-transform">
+
+          <div className="mt-6 sm:mt-8 flex flex-wrap gap-2 sm:gap-3">
+            <a href="#rfq" className="group inline-flex min-h-11 items-center gap-2 rounded-xl bg-gradient-to-br from-electric to-electric-glow px-5 sm:px-6 py-3 sm:py-3.5 text-sm font-semibold text-navy-deep glow-electric hover:scale-[1.02] transition-transform">
               <Zap className="h-4 w-4" /> Get Instant Quote
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
-            <a href="#catalog" className="inline-flex items-center gap-2 glass-strong rounded-xl px-6 py-3.5 text-sm font-semibold hover:bg-white/10 transition">
+            <a href="#catalog" className="inline-flex min-h-11 items-center gap-2 glass-strong rounded-xl px-5 sm:px-6 py-3 sm:py-3.5 text-sm font-semibold hover:bg-white/10 transition">
               Find Aircraft Parts
             </a>
-            <a href="/vendor" className="inline-flex items-center gap-2 rounded-xl border border-silver/20 px-6 py-3.5 text-sm font-semibold text-silver hover:border-silver/40 transition">
+            <a href="/vendor" className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-silver/20 px-5 sm:px-6 py-3 sm:py-3.5 text-sm font-semibold text-silver hover:border-silver/40 transition">
               Become a Vendor
             </a>
           </div>
+
         </motion.div>
 
         <motion.form
@@ -308,3 +302,56 @@ function InteractivePlane({ src }: { src: string }) {
     </div>
   );
 }
+
+function InteractiveTurbine({ src }: { src: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  // Scroll-driven rotation on top of the CSS spin
+  const scrollRot = useTransform(scrollY, [0, 1200], [0, 360]);
+  const scrollRotSpring = useSpring(scrollRot, { stiffness: 40, damping: 20 });
+
+  // Mouse-driven 3D tilt
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rx = useSpring(useTransform(my, [-1, 1], [18, -18]), { stiffness: 90, damping: 14 });
+  const ry = useSpring(useTransform(mx, [-1, 1], [-22, 22]), { stiffness: 90, damping: 14 });
+
+  useEffect(() => {
+    function onMove(e: PointerEvent) {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      mx.set((e.clientX / w) * 2 - 1);
+      my.set((e.clientY / h) * 2 - 1);
+    }
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [mx, my]);
+
+  return (
+    <div
+      ref={ref}
+      className="pointer-events-none absolute -right-32 sm:-right-40 top-16 sm:top-20 w-[480px] h-[480px] sm:w-[620px] sm:h-[620px] md:w-[720px] md:h-[720px] opacity-30 sm:opacity-45 md:opacity-60"
+      style={{ perspective: 1400 }}
+    >
+      <motion.div
+        style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
+        className="relative h-full w-full animate-float-slow"
+      >
+        <motion.img
+          src={src}
+          alt=""
+          style={{ rotate: scrollRotSpring, translateZ: 60 }}
+          className="h-full w-full object-cover rounded-full animate-spin-slow will-change-transform"
+        />
+
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: "radial-gradient(circle at 50% 50%, transparent 45%, hsl(var(--background)) 74%)",
+          }}
+        />
+      </motion.div>
+    </div>
+  );
+}
+
