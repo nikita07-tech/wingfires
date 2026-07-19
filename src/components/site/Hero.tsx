@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight, Search, Sparkles, Zap, CheckCircle2, MousePointer2 } from "lucide-react";
 import { toast } from "sonner";
@@ -45,20 +45,12 @@ export function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-hero pt-28 pb-16">
+    <section className="relative min-h-screen overflow-hidden bg-hero pt-24 sm:pt-28 pb-12 sm:pb-16">
       <div className="absolute inset-0 bg-grid opacity-60" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
 
-      <div className="pointer-events-none absolute -right-40 top-20 w-[720px] h-[720px] opacity-40 md:opacity-60">
-        <div className="relative h-full w-full animate-float-slow">
-          <img
-            src={turbine}
-            alt=""
-            className="h-full w-full object-cover rounded-full animate-spin-slow"
-            style={{ maskImage: "radial-gradient(circle, black 55%, transparent 72%)" }}
-          />
-        </div>
-      </div>
+      <InteractiveTurbine src={turbine} />
+
 
       <InteractivePlane src={aircraft} />
 
@@ -94,15 +86,16 @@ export function Hero() {
             <span className="text-silver">Trusted by 2,500+ MROs, airlines & brokers worldwide</span>
           </div>
 
-          <h1 className="mt-6 text-5xl md:text-7xl font-bold leading-[1.02] tracking-tight">
+          <h1 className="mt-6 font-bold leading-[1.05] tracking-tight text-[clamp(2rem,7vw,4.75rem)]">
             The global marketplace for
             <span className="block text-gradient-electric">certified aircraft parts.</span>
           </h1>
 
-          <p className="mt-5 max-w-xl text-lg text-silver-dim">
+          <p className="mt-4 sm:mt-5 max-w-xl text-[15px] sm:text-lg text-silver-dim">
             Wing Fires sources engine components, avionics, landing gear and consumables from verified
             vendors in 85+ countries. Instant RFQs, transparent quotes, AOG-ready in minutes.
           </p>
+
 
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="#rfq" className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-electric to-electric-glow px-6 py-3.5 text-sm font-semibold text-navy-deep glow-electric hover:scale-[1.02] transition-transform">
