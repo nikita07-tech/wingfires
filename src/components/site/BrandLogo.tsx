@@ -1,4 +1,4 @@
-import logo from "@/src/assets/wing-fires-logo.jpg.asset.json";
+import logo from "@wing-fires-logo.jpeg";
 
 export function BrandLogo({
   size = 40,
