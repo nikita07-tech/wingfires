@@ -1,4 +1,4 @@
-import logo from "@wing-fires-logo.jpeg";
+import logo from "@/assets/wing-fires-logo.jpeg";
 
 export function BrandLogo({
   size = 40,
@@ -15,8 +15,7 @@ export function BrandLogo({
         className="relative grid place-items-center rounded-xl bg-white shadow-[0_6px_24px_-8px_rgba(96,165,250,0.5)] ring-1 ring-white/20 overflow-hidden"
         style={{ height: size, width: size }}
       >
-        <img
-          src={logo.url}
+        <img src={logo} 
           alt="Wing Fires logo"
           className="h-full w-full object-contain p-0.5"
           loading="eager"
